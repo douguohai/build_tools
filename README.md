@@ -73,14 +73,18 @@ docker run -i -t -d --restart=always --name onlyoffice-documentServer-server -p 
 docker exec -it 578333003b68 /bin/bash
 
 
-# 下载中文字体包
-wgte 
+# 下载中文字体包，浏览器打开 https://github.com/douguohai/build_tools/blob/main/fonts/mini_fonts.zip 下载字体包
+unzip mini_fonts.zip
+
+docker cp mini_fonts 578333003b68:/usr/share/fonts
 
 cd /usr/share/fonts/
 
-docker cp mini_fonts/* e46202601a33:/usr/share/fonts
-
 /usr/bin/documentserver-generate-allfonts.sh
+
+exit
+
+docker restart 578333003b68
 ```
 
 ### 删除插件模块
@@ -89,7 +93,9 @@ docker exec -it 578333003b68 /bin/bash
 
 cd /var/www/onlyoffice/documentserver/sdkjs-plugins/
 
-rm -rf highlightcode/ macros/ mendeley/ ocr/ photoeditor/ speech/ thesaurus/  zotero/ youtube/
+rm -rf highlightcode/ macros/ mendeley/ ocr/ photoeditor/ speech/ thesaurus/  zotero/ youtube/ translator/
+
+exit
 
 docker restart 578333003b68
 ```
