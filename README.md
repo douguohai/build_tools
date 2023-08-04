@@ -1,6 +1,6 @@
 ### 下载 onlyoffice documentserver 魔改过的构建工具 build_tools
 ```bash
-git clone -b v7.1.1 https://github.com/douguohai/build_tools.git
+git clone https://github.com/douguohai/build_tools.git
 ```
 
 
