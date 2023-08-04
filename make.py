@@ -51,7 +51,7 @@ config.parse_defaults()
 
 base.check_build_version(base_dir)
 
-# 确保版本始终为 v7.1.1:
+# set version always v7.1.1
 # update
 # if ("1" == config.option("update")):
 #   repositories = base.get_repositories()
