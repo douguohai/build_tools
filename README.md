@@ -52,7 +52,7 @@ https://loongson-cloud-community.github.io/Loongson-Cloud-Community/%E7%A7%BB%E6
 ### Docker 镜像制作,clone 魔改后的构建仓库
 ```shell
 
-git clone -b v7.1.1.76 https://github.com/douguohai/Docker-DocumentServer.git
+git clone  https://github.com/douguohai/Docker-DocumentServer.git
 
 cd ./Docker-DocumentServer && mkdir deb
 cp ../document-server-package/deb/onlyoffice-documentserver_0.0.0-0_amd64.deb deb/onlyoffice-documentserver_amd64.deb
