@@ -1,3 +1,5 @@
+## 魔改重新编译，突破20长链接限制
+
 ### 下载 onlyoffice documentserver 魔改过的构建工具 build_tools
 ```bash
 git clone https://github.com/douguohai/build_tools.git
@@ -58,4 +60,36 @@ cd ./Docker-DocumentServer && mkdir deb
 cp ../document-server-package/deb/onlyoffice-documentserver_0.0.0-0_amd64.deb deb/onlyoffice-documentserver_amd64.deb
 docker build -t douguohai/onlyoffice-documentserver:7.1.1.76 .
 
+```
+
+### 添加中文字体
+```shell
+docker pull douguohai/onlyoffice-documentserver:7.1.1.76
+
+docker run -i -t -d --restart=always --name onlyoffice-documentServer-server -p 30080:80 \
+    -v /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice  \
+    -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  douguohai/onlyoffice-documentserver:7.1.1.76
+    
+docker exec -it 578333003b68 /bin/bash
+
+
+# 下载中文字体包
+wgte 
+
+cd /usr/share/fonts/
+
+docker cp mini_fonts/* e46202601a33:/usr/share/fonts
+
+/usr/bin/documentserver-generate-allfonts.sh
+```
+
+### 删除插件模块
+```shell
+docker exec -it 578333003b68 /bin/bash
+
+cd /var/www/onlyoffice/documentserver/sdkjs-plugins/
+
+rm -rf highlightcode/ macros/ mendeley/ ocr/ photoeditor/ speech/ thesaurus/  zotero/ youtube/
+
+docker restart 578333003b68
 ```
