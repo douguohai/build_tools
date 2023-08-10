@@ -1,4 +1,4 @@
-## 魔改重新编译，突破20长链接限制
+## onlyoffice documentserver 魔改重新编译步骤记录
 
 ### 下载 onlyoffice documentserver 魔改过的构建工具 build_tools
 ```bash
@@ -72,8 +72,12 @@ docker run -i -t -d --restart=always --name onlyoffice-documentServer-server -p 
     
 docker exec -it 578333003b68 /bin/bash
 
-
 # 下载中文字体包，浏览器打开 https://github.com/douguohai/build_tools/blob/main/fonts/mini_fonts.zip 下载字体包
+
+rm -rf /usr/local/share/fonts/*
+
+rm -rf /var/www/onlyoffice/documentserver/core-fonts/*
+
 unzip mini_fonts.zip
 
 docker cp mini_fonts 578333003b68:/usr/share/fonts
@@ -98,4 +102,33 @@ rm -rf highlightcode/ macros/ mendeley/ ocr/ photoeditor/ speech/ thesaurus/  zo
 exit
 
 docker restart 578333003b68
+```
+
+### 添加中文字号
+```shell
+
+docker cp  zxfile_onlyoffice:/var/www/onlyoffice/documentserver/web- apps/apps/documenteditor/main/app.js  app.js
+
+#使用vim修改app.js 需要注意：编辑器修改会有问题
+
+# 找到{value:8,displayValue:"8"} 在其前添加
+{value:42,displayValue:"初号"},{value:36,displayValue:"小初"},{value:26,displayValue:"一号"},{value:24,displayValue:"小一"},{value:22,displayValue:"二号"},{value:18,displayValue:"小二"},{value:16,displayValue:"三号"},{value:15,displayValue:"小三"},{value:14,displayValue:"四号"},{value:12,displayValue:"小四"},{value:10.5,displayValue:"五号"},{value:9,displayValue:"小五"},{value:7.5,displayValue:"六号"},{value:6.5,displayValue:"小六"},{value:5.5,displayValue:"七号"},{value:5,displayValue:"八号"},
+
+docker cp app.js zxfile_onlyoffice:/var/www/onlyoffice/documentserver/web-apps/apps/documenteditor/main/  有app.js.gz的话删掉
+
+#本地清缓存，验证
+```
+
+### 中文的字体排序在前,在第一步添加中文字体时 用工具 fontcreate12的版本把英文名称修改时前面加*这样排序时字体就会根据字母排序到前面
+```shell
+1. 下载字体包和FontCreator,安装并打开 FontCreator  软件
+https://www.high-logic.com/FontCreatorSetup-x64.exe
+https://github.com/douguohai/build_tools/blob/main/fonts/mini_fonts.zip
+
+2. 打开某个字体 File->open->选择字体文件
+3. 打开字体后 Font->propertises->General->Family Name-> 修稿字体英文名称
+4. 可在字体名称前方添加*,或者使用全键盘[带数字区域的键盘],在英文名称前面输入
+5. 导出字体另存为ttf文件 File->Export Font -> Export Desktop font ttf
+6. 将字体文件导入容器 重复 /usr/bin/documentserver-generate-allfonts.sh
+
 ```
