@@ -49,7 +49,6 @@ git clone -b v7.1.1.76 https://github.com/ONLYOFFICE/document-server-package.git
 cd document-server-package
 make deb
 ```
-https://loongson-cloud-community.github.io/Loongson-Cloud-Community/%E7%A7%BB%E6%A4%8D%E6%89%8B%E5%86%8C/onlyoffice/#_12
 
 ### Docker 镜像制作,clone 魔改后的构建仓库
 ```shell
@@ -127,8 +126,11 @@ https://github.com/douguohai/build_tools/blob/main/fonts/mini_fonts.zip
 
 2. 打开某个字体 File->open->选择字体文件
 3. 打开字体后 Font->propertises->General->Family Name-> 修稿字体英文名称
-4. 可在字体名称前方添加*,或者使用全键盘[带数字区域的键盘],在英文名称前面输入
+4. 可在字体名称前方添加*, 或者使用全键盘[带数字区域的键盘], 在英文名称前面输入 Alt键+0160
 5. 导出字体另存为ttf文件 File->Export Font -> Export Desktop font ttf
 6. 将字体文件导入容器 重复 /usr/bin/documentserver-generate-allfonts.sh
 
 ```
+
+##### 总参考
+> https://loongson-cloud-community.github.io/Loongson-Cloud-Community/%E7%A7%BB%E6%A4%8D%E6%89%8B%E5%86%8C/onlyoffice/#_12
